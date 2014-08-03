@@ -97,7 +97,7 @@ clam(name = "Example", type = 1, smooth = c(), prob = 0.95,
 
 \item{remove.reverse}{Proportional threshold for model reversals (0-1) before a warning is thrown.}
 
-\item{times}{The breadth of the sampling interval in st. devs.  Default is 5.}
+\item{times}{The breadth of the sampling interval in standard  deviations.  Default is 5 (99.999996 pct. of CI).}
 
 \item{sep}{Separator for the clam age file.  Default is \code{","}.}
 
