@@ -97,6 +97,7 @@ clam <- function(name="Example", type=1, smooth=c(), prob=0.95, its=1000, wghts=
         calcol, C14col, outcol, outlsize, bestcol, rangecol, slumpcol, plotname, ash)
 
 
+#' @export
 .clam <- function(name, type, smooth, prob, its, wghts, cc, cc.name, postbomb, pb.name, 
                   outliers, ignore, youngest, extradates, slump, est, calibt, 
                   mixed.effect, dmin, dmax, every, yrmin, yrmax, yrsteps, 
@@ -113,7 +114,7 @@ clam <- function(name="Example", type=1, smooth=c(), prob=0.95, its=1000, wghts=
   }
 
 # Are there any abnormal settings provided?
-  abnormal <- c(!is.between(type, 1, 5), 
+  abnormal <- c(!is.between(type, 1, 6), 
                 !is.between(prob, 0, 1), 
                 its < 100,
                 !is.between(wghts, 0, 1),

@@ -38,7 +38,7 @@
     if(type==3) chron <- .spline(depthseq, smooth, depths, its, chron, smp) else
     if(type==4) chron <- .smooth(depthseq, smooth, wghts, errors, depths, its, chron, smp) else
     if(type==5) chron <- .loess(depthseq, smooth, wghts, errors, depths,  its, chron, smp) else
-    if(type==6) chron <- .stineman(depthseq, smooth, wghts, errors, depths,  its, chron, smp)
+    if(type==6) chron <- .stinterpx(depthseq, smooth, wghts, errors, depths,  its, chron, smp)
   
   # test against age reversals
   warp <- c()
