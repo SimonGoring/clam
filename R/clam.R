@@ -298,7 +298,8 @@ clam <- function(name="Example", type=1, smooth=c(), prob=0.95, its=1000, wghts=
   if(any(type==c(2, "reg", "regr", "poly", "polyn"))) type <- 2 else
   if(any(type==c(3, "spline", "spl"))) type <- 3 else
   if(any(type==c(4, "smooth", "sm"))) type <- 4 else
-  if(any(type==c(5, "loess", "lowess"))) type <- 5
+  if(any(type==c(5, "loess", "lowess"))) type <- 5 else
+  if(any(type==c(6, "stineman"))) type <- 6
   
   if(est==1 || est==2) Est <- dat$mid1 else # 1 dummy, calculated later
   if(est==3) Est <- dat$mid1 else
