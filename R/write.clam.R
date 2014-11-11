@@ -67,7 +67,7 @@
 .write.clam <- function(dat, runname, calrange, name, prob, type, remove.reverse, smooth, wghts, its, outliers, ignore, est, BCAD, yrsteps, every, decimals, accrate, depth, depthseq, hiatus, gfit, reversal, plotpdf, plotpng, yrmin, yrmax, dmin, dmax, yrlab, dlab, plotrange, greyscale, chron, C14col, outcol, outlsize, bestcol, rangecol, calhght, maxhght, mirror, calcol, slump, slumpcol, revaxes, revyr, revd, calibt, youngest, extradates, plotname, calcurve, ccname, postbomb, pbnames, depths.file, bty, mar, mgp, ash)
 {
   # age-depth model; age estimates, accumulation rates and ranges for every analysed depth
-  runnames <- c("_interpolated", "_polyn_regr", "_cubic_spline", "_smooth_spline", "_loess")
+  runnames <- c("_interpolated", "_polyn_regr", "_cubic_spline", "_smooth_spline", "_loess", '_stineman')
 
   calrange <- cbind(calrange, round(c(diff(calrange[,4])/diff(calrange[,1]), NA), decimals+2))
   
@@ -113,9 +113,11 @@
             if(type==1) "linear interpolation between dated levels [type=1]" else
               if(type==2) ifelse(length(smooth)==0, "linear regression [type=2, smooth=c()]",
                                  paste("polynomial regression [type=2] of order", smooth, "[smooth]")) else
-                                   if(type==3) "cubic spline [type=3]" else
-                                     if(type==4) paste("smooth spline [type=4] with spar =", ifelse(length(smooth)<1, 0.3, smooth), "[smooth]") else
-                                       if(type==5) paste("locally weighted spline [type=5] with span =", ifelse(length(smooth)<1, 0.75, smooth), "[smooth]"),
+              if(type==3) "cubic spline [type=3]" else
+              if(type==4) paste("smooth spline [type=4] with spar =", ifelse(length(smooth)<1, 0.3, smooth), "[smooth]") else
+              if(type==5) paste("locally weighted spline [type=5] with span =", ifelse(length(smooth)<1, 0.75, smooth), "[smooth]") else
+              if(type==5) paste("stineman interpolation [type=6] [smooth]"),
+            
             if(wghts==1) "\nWeighted by the calibrated probabilities [wghts=1]",
             if(wghts==2) "\nWeighted by the errors (1/sdev^2) [wghts=2]",
             "\nCalculations at ", 100*prob, "% confidence ranges [prob=", prob, "]",
@@ -123,10 +125,11 @@
             "\nCalendar age point estimates for depths based on ",
             if(est==1) "weighted average of all age-depth curves [est=1]" else
               if(est==2) "midpoints of the hpd ranges of the age-depth curves [est=2]" else
-                if(est==3) "midpoints of the hpd ranges of the dated levels [est=3]" else
-                  if(est==4) "weighted means of the dated levels [est=4]" else
-                    if(est==5) "medians of the dated levels [est=5]" else
-                      if(est==6) "modes/maxima/intercepts of the dated levels [est=6]",
+              if(est==3) "midpoints of the hpd ranges of the dated levels [est=3]" else
+              if(est==4) "weighted means of the dated levels [est=4]" else
+              if(est==5) "medians of the dated levels [est=5]" else
+              if(est==6) "modes/maxima/intercepts of the dated levels [est=6]",
+            
             "\nCalendar scale used: ", if(BCAD) "cal BC/AD" else "cal BP",
             " [BCAD=", BCAD, "] at a resolution of ", yrsteps, " yr [yrsteps]",
             "\nAges were calculated every ", every, " [every] ", depth,

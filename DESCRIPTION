@@ -9,4 +9,6 @@ Description: A package to wrap the original clam program.  Clam (Blaauw, 2010;
     this version 2.2) was written to perform 'classic' age-depth modelling -
     prior to applying more sophisticated techniques such as Bayesian age-depth
     modelling.
-License: What license is it under?
+License: MIT
+Imports:
+    stinepack

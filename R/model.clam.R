@@ -2,7 +2,7 @@
 #' 
 #' The workhorse function for clam, internal to the package.
 #' 
-#' @param type
+#' @param type numeric.  Model type to generate the chronology.  Default is 1 (linear), also available are 2, polynomial; 3, cubic spline; 4, smooth spline; 5, locally weighted spline (loess).
 #' @param smooth
 #' @param its
 #' @param wghts
@@ -32,11 +32,13 @@
   
   # choose model: interpolation, (polynomial) regression, spline, smooth spline or loess
   chron <- array(0, dim=c(length(depthseq), its))
-  if(type==1) chron <- .interp(depthseq, depths, its, chron, smp) else
+  
+  if(type==1)   chron <- .interp(depthseq, depths, its, chron, smp) else
     if(type==2) chron <- .poly(depthseq, smooth, wghts, errors, depths, its, chron, smp) else
-      if(type==3) chron <- .spline(depthseq, smooth, depths, its, chron, smp) else
-        if(type==4) chron <- .smooth(depthseq, smooth, wghts, errors, depths, its, chron, smp) else
-          if(type==5) chron <- .loess(depthseq, smooth, wghts, errors, depths,  its, chron, smp)
+    if(type==3) chron <- .spline(depthseq, smooth, depths, its, chron, smp) else
+    if(type==4) chron <- .smooth(depthseq, smooth, wghts, errors, depths, its, chron, smp) else
+    if(type==5) chron <- .loess(depthseq, smooth, wghts, errors, depths,  its, chron, smp) else
+    if(type==6) chron <- .stinterpx(depthseq, smooth, wghts, errors, depths,  its, chron, smp)
   
   # test against age reversals
   warp <- c()
