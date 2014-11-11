@@ -73,7 +73,7 @@
 #' @param plotname Should the core name be printed in the plot?
 #' @param ash Should all distributions be plotted at the same height?
 #' 
-#' @author Maarten Blaauw
+#' @author Maarten Blaauw, Simon Goring
 #' @return Text output and saved file (currently).
 #' @export
 
