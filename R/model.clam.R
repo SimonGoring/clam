@@ -44,7 +44,7 @@
   warp <- c()
   if(remove.reverse!=FALSE)
     for(i in 1:ncol(chron))
-      if(!BCAD && min(diff(chron[,i])) <= 0 || BCAD && max(diff(chron[,i])) >= 0)
+      if(!BCAD && min(diff(chron[,i]), na.rm=TRUE) <= 0 || BCAD && max(diff(chron[,i]), na.rm=TRUE) >= 0)
         warp <- c(warp, i)
   if(length(warp) > 0)
     if(length(warp) > remove.reverse*its)
