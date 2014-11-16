@@ -169,6 +169,6 @@ This is the main age-depth modelling function.
 The default values can be changed permanently within this file or temporarily when calling clam()
 }
 \author{
-Maarten Blaauw
+Maarten Blaauw, Simon Goring
 }
 

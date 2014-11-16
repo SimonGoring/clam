@@ -18,15 +18,6 @@
 
 .stinterpx <- function(depthseq, smooth, wghts, errors, depths, its, chron, smp)
 {
-    
-  if(max(depthseq) > max(depths)){
-    # we're extrapolating:
-    ix <- findInterval(depthseq, depths, rightmost.closed = TRUE)
-    
-    # Extrapolate below & above the depth range:
-    ix[depthseq <= min(depths)] <- 1
-    ix[max(x) <= depthseq] <- length(depths) - 1
-  }
   
   for(i in 1:its){
       if(wghts==1) w <- smp[,i,2]
