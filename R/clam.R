@@ -74,7 +74,41 @@
 #' @param ash Should all distributions be plotted at the same height?
 #' 
 #' @author Maarten Blaauw, Simon Goring
-#' @return Text output and saved file (currently).
+#' @return A \code{data.frame} with depth, point and 95%CI values.  Also returns a text output and saved file to a 'Cores' folder in the working directory.
+#' #' @section Note:
+#' Currently the method requires you to have a \code{Cores} folder in your working directory.  This will soon be changes.
+#'
+#' @examples \dontrun{
+#' # You need the neotoma package for this example.  If you do not have it installed, uncomment the following lines:
+#' # require(devtools)
+#' # install_github('neotoma', 'rOpenSci')
+#' 
+#' require(neotoma)
+#' marion.site <- get_site(sitename='Marion Lake%')
+#' marion.data <- get_dataset(siteid=marion.site$siteid, datasettype = 'pollen')
+#' 
+#' marion.download <- get_download(marion.data)
+#' 
+#' #  You need to have a 'Cores' directory in the current working directory.
+#' 
+#' if(!'Cores' %in% list.files(include.dirs=TRUE)){
+#'   dir.create('Cores')
+#' }
+#' 
+#' write_agefile(marion.download[[1]],chronology = 1,path = '.', corename = 'Marion', cal.prog = 'Clam')
+#' 
+#' #  Build a model using a smooth spline:
+#' marion.ages <- clam('Marion', type = 4, 
+#'                     depthseq=marion.download[[1]]$sample.meta$depth)
+#' 
+#' # plot the difference between the Neotoma model and the new clam model:
+#' plot(marion.download[[1]]$chronologies$'NAPD 1'[,2], marion.ages[,4],
+#'      xlab = 'NAPD Ages (uncalibrated)', ylab = 'Clam Ages')
+#' abline(0,1)
+#' }
+#' @references
+#'  Blaauw, M., 2010. Methods and code for 'classical' age-modelling of radiocarbon sequences. Quaternary Geochronology 5, 512-518
+#' @keywords IO connection
 #' @export
 
 clam <- function(name="Example", type=1, smooth=c(), prob=0.95, its=1000, wghts=1, 
@@ -439,4 +473,6 @@ clam <- function(name="Example", type=1, smooth=c(), prob=0.95, its=1000, wghts=
   cat("\n  Fit (-log, lower is better):", gfit, "\n")
   
   if(reversal) cat("  Age reversals occurred. Try other model?\n")
+
+  return(calrange)
 }

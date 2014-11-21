@@ -160,7 +160,8 @@ clam(name = "Example", type = 1, smooth = c(), prob = 0.95,
 \item{ash}{Should all distributions be plotted at the same height?}
 }
 \value{
-Text output and saved file (currently).
+A \code{data.frame} with depth, point and 95%CI values.  Also returns a text output and saved file to a 'Cores' folder in the working directory.
+#'
 }
 \description{
 clam, R code for classical (non-Bayesian) age-depth modelling, this version 2.2
@@ -168,7 +169,46 @@ see accompanying manual.html and Blaauw 2010 (Quaternary Geochronology 5: 512-51
 This is the main age-depth modelling function.
 The default values can be changed permanently within this file or temporarily when calling clam()
 }
+\section{Note}{
+
+Currently the method requires you to have a \code{Cores} folder in your working directory.  This will soon be changes.
+}
+\examples{
+\dontrun{
+# You need the neotoma package for this example.  If you do not have it installed, uncomment the following lines:
+# require(devtools)
+# install_github('neotoma', 'rOpenSci')
+
+require(neotoma)
+marion.site <- get_site(sitename='Marion Lake\%')
+marion.data <- get_dataset(siteid=marion.site$siteid, datasettype = 'pollen')
+
+marion.download <- get_download(marion.data)
+
+#  You need to have a 'Cores' directory in the current working directory.
+
+if(!'Cores' \%in\% list.files(include.dirs=TRUE)){
+  dir.create('Cores')
+}
+
+write_agefile(marion.download[[1]],chronology = 1,path = '.', corename = 'Marion', cal.prog = 'Clam')
+
+#  Build a model using a smooth spline:
+marion.ages <- clam('Marion', type = 4,
+                    depthseq=marion.download[[1]]$sample.meta$depth)
+
+# plot the difference between the Neotoma model and the new clam model:
+plot(marion.download[[1]]$chronologies$'NAPD 1'[,2], marion.ages[,4],
+     xlab = 'NAPD Ages (uncalibrated)', ylab = 'Clam Ages')
+abline(0,1)
+}
+}
 \author{
 Maarten Blaauw, Simon Goring
 }
+\references{
+Blaauw, M., 2010. Methods and code for 'classical' age-modelling of radiocarbon sequences. Quaternary Geochronology 5, 512-518
+}
+\keyword{IO}
+\keyword{connection}
 
